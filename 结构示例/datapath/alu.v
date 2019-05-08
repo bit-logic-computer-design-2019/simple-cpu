@@ -1,5 +1,5 @@
 module alu(
-    A, B,ALUctrl,
+    A, B,  
     ALU, beq, carrier
 );
 

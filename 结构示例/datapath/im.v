@@ -1,4 +1,5 @@
 // 指令存储器，读入一个地址，输出那个地址所存储的数据
+// instruction memory
 module im(
     PC,
     IM
@@ -6,7 +7,13 @@ module im(
 input PC[32:2];
 output IM[32:0];
 
-// 利用某种方式读取
+reg [31:0] text[0:63]; // 指令段
 
+initial 
+begin
+        $readmemb("../code.txt", text);  //读取指令
+end
 
-endmodule //i
+IM <= text[PC];
+
+endmodule //im
