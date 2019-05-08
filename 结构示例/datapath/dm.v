@@ -9,10 +9,10 @@ input DMWr, Clk;
 output DM[31:0]; // alias ReadData
 
 // 模拟内存，以32位为一字长存储，共64个字长
-reg [7:0] memory[0:63];
-integer i;
+reg [7:0] memory[63:0];
+
 initial begin
-    for (i = 0; i < 64;i= i + 1) memory[i] <= 0;
+    $readmemb("../restfile/dm.txt", memory);
 end
 
 

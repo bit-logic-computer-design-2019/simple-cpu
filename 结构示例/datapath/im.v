@@ -4,10 +4,10 @@ module im(
     PC,
     IM
 );
-input PC[32:2];
-output IM[32:0];
+input PC[32:2]; 
+output IM[31:0];
 
-reg [31:0] text[0:63]; // 指令段
+reg [31:0] text[63:0]; // 指令段
 
 initial 
 begin
