@@ -22,7 +22,7 @@ output [31:2] PC;
 // For simplicity in this chapter,
 // we will reset the PC to
 // 0x00000000 and place our
-// programs there instead.
+// programs there instead. 
 
 always @(posedge Clk or posedge Reset) begin
     if (Reset) // 暂时初始化为0

@@ -1,7 +1,10 @@
 // 获取下一个pc值
 // if(rs==rt)PC=PC+4+(sign)imm<<2 # beq
 
-module npc(Imm, Br, Zero,  NPC)
+module npc(
+    Imm, Br, Zero,
+    NPC
+); 
     input [15:0] imm;
     input Br;
     input Zero;
