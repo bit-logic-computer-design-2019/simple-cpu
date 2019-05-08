@@ -14,6 +14,6 @@ begin
         $readmemb("../code.txt", text);  //读取指令
 end
 
-IM <= text[PC];
+assign IM = text[PC];
 
 endmodule //im
