@@ -7,7 +7,7 @@ input Reset;
 input [31:2] Ad;
 input [31:0] WrData;
 input DMWr, Clk;
-output [31:0] DM; // alias ReadData
+output reg [31:0] DM; // alias ReadData
 
 // 模拟内存，以32位为�?字长存储，共64个字�?
 reg [7:0] memory[63:0];
