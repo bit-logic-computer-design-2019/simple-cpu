@@ -1,20 +1,20 @@
-// 获取下一个pc值
+// 获取下一个pc�?
 // if(rs==rt)PC=PC+4+(sign)imm<<2 # beq
 
 module npc(
     Imm, Br, Zero,
     NPC
 ); 
-    input [15:0] imm;
+    input [15:0] Imm;
     input Br;
     input Zero;
-    output [31:2] NPC; //注意这里从第二位开始
+    output reg [31:2] NPC; //注意这里从第二位�?�?
 
     always @(*) begin
         
     if (Zero == 1)
         // 加等于立即数
-        NPC = NPC + 1 + imm;
+        NPC = NPC + 1 + Imm;
     else
         NPC = NPC + 1;
     end
