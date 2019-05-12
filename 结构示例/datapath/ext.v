@@ -1,6 +1,6 @@
 // 零扩展，左边加0
 module ext(
-    input [15:0] imm16,
+    input [15:0] imm16, Extop,
     output [31:0] imm32
 );
 
