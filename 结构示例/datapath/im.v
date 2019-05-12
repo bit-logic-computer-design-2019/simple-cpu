@@ -1,16 +1,17 @@
-// 指令存储器，读入一个地址，输出那个地址所存储的数据
 // instruction memory
 module im(
-    PC,
+    PC, Reset, Clk,
     IM
 );
-input PC[32:2];
-output IM[32:0];
+input Reset;
+input Clk;
+input [32:2] PC; 
+output [31:0] IM;
 
-reg [31:0] text[0:63]; // 指令段
+reg [31:0] text[63:0]; // 指令放在这里
 
-initial 
-begin
+always @(posedge Clk or posedge Reset) begin
+    if (Reset)
         $readmemb("../code.txt", text);  //读取指令
 end
 
