@@ -1,4 +1,4 @@
-// 指向指令存储�?
+// 指向指令存储
 module pc(
     NPC,Clk,Reset,
     PC

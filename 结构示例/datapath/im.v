@@ -1,4 +1,3 @@
-// 指令存储器，读入�?个地�?，输出那个地�?�?存储的数�?
 // instruction memory
 module im(
     PC, Reset, Clk,
@@ -9,7 +8,7 @@ input Clk;
 input [32:2] PC; 
 output [31:0] IM;
 
-reg [31:0] text[63:0]; // 指令�?
+reg [31:0] text[63:0]; // 指令放在这里
 
 always @(posedge Clk or posedge Reset) begin
     if (Reset)

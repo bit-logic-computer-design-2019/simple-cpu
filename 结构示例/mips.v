@@ -6,9 +6,9 @@ input Clk, Reset;
 
 wire [31:0] instruction;
 wire [31:0] imm32;
-wire [31:0] WData;  //被写进regfile的�??
-wire [31:0] ALU;    //ALU的输�?
-wire [31:0] DM;     //memory的输�?
+wire [31:0] WData;  //被写进regfile的数据
+wire [31:0] ALU;    //ALU的输出
+wire [31:0] DM;     //memory的输输出
 wire [31:0] BusA;
 wire [31:0] BusB;
 wire [31:0] ALU_input2;
@@ -24,7 +24,7 @@ npc npc1(.Imm(instruction[15:0]),.Br(Br),.Zero(nPC_sel),.NPC(NPC));
 pc pc1(.NPC(NPC),.Clk(Clk),.Reset(Reset),.PC(PC));
 im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 
-//拓展立即�?
+//拓展立即数
 ext ext1(.imm16(instruction[15:0]),.ExtOp(ExtOp),.imm32(imm32));
 
 //controller

@@ -11,7 +11,7 @@ module testbench();
 
         #30 Reset = 1'b1;
 
-        result = mips1.im1.text[50];    //指令写完了加�?行这个@32(表示下一行是�?50�?..)
+        result = mips1.im1.text[50];    //指令写完了加一行这个@32(表示下一行是第50行....)
         $monitor("Time %t, R16 = %h", $realtime, mips1.regfile1.regHeap[16]);
         
     end 

@@ -1,4 +1,4 @@
-// 获取下一个pc�?
+// 获取下一个pc
 // if(rs==rt)PC=PC+4+(sign)imm<<2 # beq
 
 module npc(
@@ -8,7 +8,7 @@ module npc(
     input [15:0] Imm;
     input Br;
     input Zero;
-    output reg [31:2] NPC; //注意这里从第二位�?�?
+    output reg [31:2] NPC; //注意这里从第二位开始
 
     always @(*) begin
         
