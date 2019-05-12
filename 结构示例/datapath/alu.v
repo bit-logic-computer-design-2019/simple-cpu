@@ -17,7 +17,7 @@ input   [31:0]          B;                  // the 2nd input data
 input   [2:0]           ALUctr;               
 output  [31:0]          ALU;                  // calculation result 
 output                  carrier;   
-output                  zero;            
+output                  Zero;            
 
 reg     [32:0]          tmp; 
 
