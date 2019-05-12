@@ -1,6 +1,6 @@
 module RegFile(
-    RS1,RS2,RD,WData,RegWr,Clk,Reset,
-    RD1,RD2
+    RS1, RS2, RD, WData, RegWr, Clk, Reset,
+    RD1, RD2
 );
 // The 32-element x 32-bit register file has two read ports and one write
 // port. The read ports take 5-bit address inputs, A1 and A2, each specifying

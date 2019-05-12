@@ -8,8 +8,8 @@ ALUctr
 */
 
 module alu(
-    A, B, ALUctrl,
-    ALU, zero, carrier
+    A, B, ALUctr,
+    ALU, Zero, carrier
 );
 
 input   [31:0]          A;                  // the 1st input data
@@ -23,7 +23,7 @@ reg     [32:0]          tmp;
 
 assign  ALU = tmp[31:0] ;
 assign  carrier = (tmp[32]==1) ? 1 : 0 ;
-assign  zero = (tmp[31:0]==0) ? 1 : 0 ;
+assign  Zero = (tmp[31:0]==0) ? 1 : 0 ;
 
 always  @( * )
 	case (ALUctr)

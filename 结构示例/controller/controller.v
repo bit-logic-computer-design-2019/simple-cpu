@@ -1,10 +1,9 @@
 module controller(
-    opcode, rs, rt, rd, funct, imm16,
+    opcode, funct,
     nPC_sel, RegWr, RegDst, ExtOp, ALUSrc, ALUctr, MemWr, MemtoReg
 );
+
 input [5:0] opcode, funct;   //指令操作码
-input [4:0] rs, rt, rd;     //所用寄存器地址
-input [15:0] imm16;         //立即数
 output nPC_sel, RegWr, RegDst, ExtOp, ALUSrc, MemWr, MemtoReg;
 /* 
 nPc_sel 0-->+4 

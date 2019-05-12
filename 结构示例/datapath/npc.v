@@ -12,7 +12,7 @@ module npc(
 
     always @(*) begin
         
-    if (Br == 1)
+    if (Zero == 1)
         // 加等于立即数
         NPC = NPC + 1 + imm;
     else
