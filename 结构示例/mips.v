@@ -1,6 +1,8 @@
-module mips;
+module mips(
+    Clk, Reset
+);
 
-wire Clk, Reset;
+input Clk, Reset;
 
 wire [31:0] instruction;
 wire [31:0] imm32;
