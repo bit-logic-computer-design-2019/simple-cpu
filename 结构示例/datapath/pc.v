@@ -1,4 +1,4 @@
-// 指向指令存储器
+// 指向指令存储�?
 module pc(
     NPC,Clk,Reset,
     PC
@@ -6,7 +6,7 @@ module pc(
 input [31:2] NPC;
 input Clk;
 input Reset;
-output [31:2] PC;
+output reg [31:2] PC;
 
 // At the very least, the program
 // counter must have a reset
@@ -26,7 +26,7 @@ output [31:2] PC;
 
 always @(posedge Clk or posedge Reset) begin
     if (Reset) // 暂时初始化为0
-        PC <= 0x00000000;
+        PC <= 32'h00000000;
     else
         PC <= NPC;
 end
