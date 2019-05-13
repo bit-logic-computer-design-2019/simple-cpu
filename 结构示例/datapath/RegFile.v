@@ -22,7 +22,7 @@ assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS1];
 // RegWr 为控制写的使能
 always @(posedge Clk or posedge Reset) begin
     if (Reset)
-        $readmemb("../resetfile/regHeap.txt", regHeap); //系统任务从指定文件中读取数据到存储器
+        $readmemb("C:/Users/海神2019/Documents/GitHub/simple-cpu/结构示例/resetfile/regHeap.txt", regHeap); //系统任务从指定文件中读取数据到存储器
     else if (RegWr)
         regHeap[RD] <= WData;
 end
