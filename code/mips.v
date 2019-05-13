@@ -12,7 +12,7 @@ wire [31:0] DM;     //memory的输输出
 wire [31:0] BusA;
 wire [31:0] BusB;
 wire [31:0] ALU_input2;
-wire [31:2] NPC, PC;
+wire [31:0] NPC, PC;
 wire [2:0] ALUctr;
 wire [4:0] RD; 
 
@@ -21,7 +21,7 @@ wire Br, Zero, carrier;
 wire nPC_sel, RegWr, RegDst, ALUSrc, MemWr, MemtoReg;
 
 //取指
-npc npc1(.Imm(instruction[15:0]),.Br(Br),.Zero(nPC_sel),.NPC(NPC));
+npc npc1(.Imm(instruction[15:0]),.Br(Br),.Zero(nPC_sel),.NPC(NPC),.Reset(Reset),.PC(PC));
 pc pc1(.NPC(NPC),.Clk(Clk),.Reset(Reset),.PC(PC));
 im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 

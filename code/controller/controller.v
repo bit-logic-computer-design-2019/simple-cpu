@@ -29,46 +29,51 @@ output reg [1:0] ExtOp;
 */
 
 wire add, sub, ori, lw, sw, beq;
-wire lui;
+wire lui, addi,and_,andi;
 
 assign add = (opcode == 6'h00)&&(funct == 6'h20 || funct == 6'h21);
+assign addi = (opcode == 6'h8||opcode == 6'h9);
 assign sub = (opcode == 6'h00)&&(funct == 6'h22 || funct == 6'h23);
 assign ori = (opcode == 6'hd);
 assign lw = (opcode == 6'h23);
 assign sw = (opcode == 6'h2b);
 assign beq = (opcode == 6'h4);
 assign lui = (opcode == 6'hf);
+assign and_ = (opcode == 6'h0) && (funct == 6'h24);
+assign andi = (opcode == 6'hc);
 
 // 控制ALU的具体运算功能
 always @(*) begin
 
-    if(add || lw || sw)
+    if(add || lw || sw || addi) // add
         ALUctr = 3'b010;
-    else if(ori)
+    else if(ori) // or
         ALUctr = 3'b001;
-    else if(sub || beq)
+    else if(sub || beq) // sub
         ALUctr = 3'b110;
     else if(lui)
         ALUctr = 3'b111;
+    else if(and_ || andi) // and &
+        ALUctr = 3'b000;
 
 
 end
 
 // 是否使用第三个寄存器
-assign RegDst = add || sub;     //加和减的时候需要存入第三个寄存器
+assign RegDst = add || sub || and_;     //加和减的时候需要存入第三个寄存器
 
 // 是否向R中写入值
-assign RegWr = add || sub || ori || lw || lui; //这四个指令改变regFile的值
+assign RegWr = add || sub || ori || lw || lui || addi || and_ || andi; //这四个指令改变regFile的值
 
 // 加载立即数
-assign ALUSrc = ori || lw || sw || lui;    //需要立即数的三个指令
+assign ALUSrc = ori || lw || sw || lui || addi || andi;    //需要立即数的三个指令
 
 // 是否用有符号扩展
 always @(*) begin
-    if(0)
+    if(andi)
         // unsigned
         ExtOp = 2'b00;
-    else if(lw||sw)
+    else if(lw||sw||addi)
         // signed
         ExtOp = 2'b01;
     else if(lui)

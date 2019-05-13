@@ -19,7 +19,7 @@ output [31:0] RD1, RD2;
 reg [31:0] regHeap[31:1];
 
 assign RD1 = (RS1 == 5'd0) ? 32'd0 : regHeap[RS1];
-assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS1];
+assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS2];
 
 // RegWr 为控制写的使能
 always @(posedge Clk or posedge Reset) begin
