@@ -14,9 +14,9 @@ reg [7:0] memory[63:0];
 // DMWr 控制读还是写
 always @(posedge Clk or posedge Reset) begin
     if(Reset)
-        $readmemb("C:/Users/海神2019/Documents/GitHub/simple-cpu/code/restfile/dm.txt", memory);
+        $readmemb("E:/gitHub/simple-cpu/code/restfile/dm.txt", memory);
     else if(MemWr)
-    // 若写使能为1，则写入memory[Addr]
+    // 若写使能�?1，则写入memory[Addr]
         memory[Ad] <= WrData;
     else
     // 否则读出
