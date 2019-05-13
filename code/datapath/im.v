@@ -12,7 +12,7 @@ reg [31:0] text[63:0]; // 指令放在这里
 
 always @(posedge Clk or posedge Reset) begin
     if (Reset)
-        $readmemb("C:/Users/海神2019/Documents/GitHub/simple-cpu/结构示例/code.txt", text);  //读取指令
+        $readmemb("C:/Users/海神2019/Documents/GitHub/simple-cpu/code/code.txt", text);  //读取指令
 end
 
 assign IM = text[PC];
