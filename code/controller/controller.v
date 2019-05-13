@@ -4,7 +4,7 @@ module controller(
 );
 
 input [5:0] opcode, funct;   //指令操作码
-output nPC_sel, RegWr, RegDst, ExtOp, ALUSrc, MemWr, MemtoReg;
+output nPC_sel, RegWr, RegDst, ALUSrc, MemWr, MemtoReg;
 /* 
 nPc_sel 0-->+4 
         1-->branch
@@ -22,38 +22,68 @@ MemtoReg    0-->write RegFile from ALU
             1-->write RegFile from Memory
 */
 output reg [2:0] ALUctr;
+output reg [1:0] ExtOp;
 /*  add 010 
     sub 110
     | 001
 */
 
 wire add, sub, ori, lw, sw, beq;
+wire lui;
 
-assign add = (opcode == 6'h00)&&(funct == 6'h20);
-assign sub = (opcode == 6'h00)&&(funct == 6'h22);
+assign add = (opcode == 6'h00)&&(funct == 6'h20 || funct == 6'h21);
+assign sub = (opcode == 6'h00)&&(funct == 6'h22 || funct == 6'h23);
 assign ori = (opcode == 6'hd);
 assign lw = (opcode == 6'h23);
 assign sw = (opcode == 6'h2b);
 assign beq = (opcode == 6'h4);
+assign lui = (opcode == 6'hf);
 
+// 控制ALU的具体运算功能
 always @(*) begin
+
     if(add || lw || sw)
         ALUctr = 3'b010;
     else if(ori)
         ALUctr = 3'b001;
     else if(sub || beq)
         ALUctr = 3'b110;
+    else if(lui)
+        ALUctr = 3'b111;
+
+
 end
 
+// 是否使用第三个寄存器
 assign RegDst = add || sub;     //加和减的时候需要存入第三个寄存器
-assign RegWr = add || sub || ori || lw; //这四个指令改变regFile的值
 
-assign ALUSrc = ori || lw || sw;    //需要立即数的三个指令
-assign ExtOp = lw || sw;    //lw和sw的时候是sign信号,ori时候是0, 不知道为啥....
+// 是否向R中写入值
+assign RegWr = add || sub || ori || lw || lui; //这四个指令改变regFile的值
 
+// 加载立即数
+assign ALUSrc = ori || lw || sw || lui;    //需要立即数的三个指令
+
+// 是否用有符号扩展
+always @(*) begin
+    if(0)
+        // unsigned
+        ExtOp = 2'b00;
+    else if(lw||sw)
+        // signed
+        ExtOp = 2'b01;
+    else if(lui)
+        // lui
+        ExtOp = 2'b10;
+
+end
+
+// 1：从DataMemroy加载数据，0：从ALU加载数据
 assign MemtoReg = lw;   //lw从memory里加载数据
+
+// 是否写入DataMemory
 assign MemWr = sw;  //sw的时候写memory
 
+// nPC是否不再是简简单单的加1
 assign nPC_sel = beq;   //beq的时候程序计数器不是+1
 
 endmodule // controller

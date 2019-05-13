@@ -31,9 +31,12 @@
 
 - R型
   - add
+  - addu
   - sub
+  - subu
 - I型
   - ori
+  - lui
 - 存储器访问指令
   - lw
   - sw
@@ -52,3 +55,13 @@
 需要通读教程，对每一个元件根据对应的功能来推理。
 
 ### 
+
+#### lui
+
+R[rt] = {imm, 16'b0}
+
+#### ExtOp
+
+00 : Unsigned ext
+01 : Signed ext
+10 : ext for lui
