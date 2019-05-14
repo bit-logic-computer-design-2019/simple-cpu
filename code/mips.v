@@ -10,7 +10,7 @@ wire [31:0] WData;  //被写进regfile的数据
 wire [31:0] ALU;    //ALU的输出
 wire [31:0] DM;     //memory的输输出
 wire [31:0] BusA;
-wire [31:0] BusB;
+wire [31:0] BusB; 
 wire [31:0] ALU_input2;
 wire [31:0] NPC, PC;
 wire [2:0] ALUctr;
