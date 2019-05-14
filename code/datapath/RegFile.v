@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module RegFile(
-    RS1, RS2, RD, WData, RegWr, Clk, Reset,
+    RS1, RS2, RD, WData, RegWr, Clk, Reset, PC,
     RD1, RD2
 );
 // The 32-element x 32-bit register file has two read ports and one write
@@ -12,7 +12,7 @@ module RegFile(
 // enable input, WE3; and a clock. If the write enable is 1, the register file
 // writes the data into the specified register on the rising edge of the clock.
 input [4:0] RS1, RS2, RD;
-input [31:0] WData;
+input [31:0] WData, PC;
 input RegWr, Clk, Reset; // RegWr 写-使能
 output [31:0] RD1, RD2;
 
