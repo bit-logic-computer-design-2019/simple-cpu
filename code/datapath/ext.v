@@ -9,6 +9,7 @@ module ext(
 assign imm32 = (ExtOp == 2'b00)?{16'h0,imm16}:
                 (ExtOp == 2'b01)?{{16{imm16[15]}},imm16}:
                 (ExtOp == 2'b10)?{imm16,16'h0}:
+                (ExtOp == 2'b11)?{{14{imm16[15]}},imm16,2'b0}:
                 32'h0;
 
 endmodule // ext  
