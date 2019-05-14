@@ -31,6 +31,7 @@ always  @( * )
 		3'b010 : tmp = {A[31], A} + {B[31], B} ;//add lw sw
 		3'b110 : tmp = {A[31], A} - {B[31], B};//sub
 		3'b001 : tmp = {A[31], A} | {B[31], B}; //ori
+		3'b000 : tmp = {A[31], A} & {B[31], B};// and
 
 		3'b101 : tmp = {1'b0,A};
 		3'b111 : tmp = {1'b0,B}; // 选择B

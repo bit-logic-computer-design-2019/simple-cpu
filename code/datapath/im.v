@@ -7,7 +7,7 @@ module im(
 );
 input Reset;
 input Clk;
-input [31:2] PC; 
+input [31:0] PC; 
 output [31:0] IM;
 
 reg [31:0] txt[63:0]; // 指令放在这里
