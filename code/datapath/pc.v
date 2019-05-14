@@ -3,10 +3,10 @@ module pc(
     NPC,Clk,Reset,
     PC
 );
-input [31:2] NPC;
+input [31:0] NPC;
 input Clk;
 input Reset;
-output reg [31:2] PC;
+output reg [31:0] PC;
 
 // At the very least, the program
 // counter must have a reset
@@ -26,7 +26,7 @@ output reg [31:2] PC;
 
 always @(posedge Clk or posedge Reset) begin
     if (Reset) // 暂时初始化为0
-        PC <= 32'h00000000;
+        PC <= 32'h0;
     else
         PC <= NPC;
 end

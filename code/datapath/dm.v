@@ -4,7 +4,7 @@ module Datamemory(
     DM
 );
 input Clk, Reset;
-input [31:2] Ad;
+input [31:0] Ad;
 input [31:0] WrData;
 input MemWr;
 output reg [31:0] DM; // alias ReadData
@@ -16,7 +16,7 @@ always @(posedge Clk or posedge Reset) begin
     if(Reset)
         $readmemb("E:/gitHub/simple-cpu/code/restfile/dm.txt", memory);
     else if(MemWr)
-    // 若写使能�?1，则写入memory[Addr]
+    // 若写使能�?1，则写入memory[Addr]
         memory[Ad] <= WrData;
     else
     // 否则读出

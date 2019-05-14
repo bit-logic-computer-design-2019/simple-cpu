@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module RegFile(
     RS1, RS2, RD, WData, RegWr, Clk, Reset,
     RD1, RD2
@@ -11,15 +13,15 @@ module RegFile(
 // writes the data into the specified register on the rising edge of the clock.
 input [4:0] RS1, RS2, RD;
 input [31:0] WData;
-input RegWr, Clk, Reset; // RegWr �?-使能
+input RegWr, Clk, Reset; // RegWr �?-使能
 output [31:0] RD1, RD2;
 
 reg [31:0] regHeap[31:1];
 
 assign RD1 = (RS1 == 5'd0) ? 32'd0 : regHeap[RS1];
-assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS1];
+assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS2];
 
-// RegWr 为控制写的使�?
+// RegWr 为控制写的使�?
 always @(posedge Clk or posedge Reset) begin
     if (Reset)
         $readmemb("E:/gitHub/simple-cpu/code/resetfile/regHeap.txt", regHeap); //系统任务从指定文件中读取数据到存储器

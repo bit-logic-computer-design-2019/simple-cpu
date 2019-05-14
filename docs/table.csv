@@ -1,5 +1,16 @@
-控制信号,nPC_sel,RegWr,RegDst,ExtOp,ALUSrc,ALUctr,MemWr,MemtoReg
-含义,+4 还是分支,是否？？,RegFile写入地址二选一,,RegFile输出还是扩展数二选一,[2:0]控制运算器操作,？写：读 DM,ALU的输出还是DM的输出送往RegFile
-,,,,,,,,
-add,,,,,,,,
-sub,,,,,,,,
+控制信号,nPC_sel,RegWr,RegDst,ExtOp,ALUSrc,ALUctr,MemWr,MemtoReg,implement,test
+含义,,写入Reg,用rd？,,立即数？,,写入mem？,mem→Reg?,,
+,,,,,,,,,,
+add,0,1,1,x,0,ADD,0,0,o,ok
+sub,0,1,1,x,0,SUB,0,0,o,ok
+ori,0,1,0,00,1,OR,0,0,o,
+lw,0,1,0,1,1,ADD,0,1,o,
+sw,0,0,x,1,1,ADD,1,x,o,
+beq,1,0,x,x,0,SUB,0,x,o,
+lui,0,1,0,10,1,111,0,0,o,ok
+addi,0,1,0,1,1,ADD,0,0,o,
+addiu,0,1,0,1,1,ADD,0,0,o,
+subu,0,1,1,x,0,SUB,0,0,o,ok
+and,0,1,1,x,0,AND,0,0,o,
+andi,0,1,0,00,1,AND,0,0,o,
+bne,,,,,,,,,,
