@@ -24,7 +24,7 @@ wire Br, Zero, carrier;
 wire RegWr, RegDst, ALUSrc;
 
 //取指
-npc npc1(.Imm(instruction[15:0]),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.Reset(Reset),.PC(PC));
+npc npc1(.Imm(instruction[15:0]),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.Reset(Reset),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
 pc pc1(.NPC(NPC),.Clk(Clk),.Reset(Reset),.PC(PC));
 im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 
@@ -38,7 +38,7 @@ controller con1(.opcode(instruction[31:26]),.funct(instruction[5:0]),.nPC_sel(nP
 alu alu1(.A(BusA),.B(ALU_input2),.ALUctr(ALUctr),.ALU(ALU),.Zero(Zero),.carrier(carrier),.shamt(instruction[10:6]));
 
 //RegFile
-RegFile regfile1(.RS1(instruction[25:21]),.RS2(instruction[20:16]),.RD(RD),.WData(WData),.RegWr(RegWr),.Clk(Clk),.Reset(Reset),.RD1(BusA),.RD2(BusB));
+RegFile regfile1(.RS1(instruction[25:21]),.RS2(instruction[20:16]),.RD(RD),.WData(WData),.RegWr(RegWr),.Clk(Clk),.Reset(Reset),.RD1(BusA),.RD2(BusB),.PC(PC));
 
 //data_memory
 Datamemory mem1(.Ad(ALU),.WrData(BusB),.MemWr(MemWr),.Clk(Clk),.Reset(Reset),.DM(DM),.DMcut_sel(DMcut_sel));
