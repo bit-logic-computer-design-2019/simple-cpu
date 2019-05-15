@@ -1,8 +1,10 @@
 module mips(
-    Clk, Reset
+    Clk, Reset,
+    CPU_out
 );
 
 input Clk, Reset;
+output CPU_out;
 
 wire [31:0] instruction;
 wire [31:0] imm32;

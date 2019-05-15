@@ -7,29 +7,9 @@ input [5:0] opcode, funct;   //指令操作码
 output RegWr, RegDst, ALUSrc;
 output [1:0] MemtoReg, DMcut_sel;
 output [2:0] MemWr;
-/* 
-nPc_sel 0-->+4 
-        1-->branch
-RegWr   0-->No action
-        1-->write register
-RegDst  0-->rt(I型指令)
-        1-->rd(R型指令)
-ExtOp   0-->zero
-        1-->sign不知道这是干什么的.....
-ALUSrc  0-->ALU的操作数均不是立即数
-        1-->ALU的一个操作数是立即数
-MemWr   0-->No action
-        1-->write memory(sw时候用)
-MemtoReg    0-->write RegFile from ALU
-            1-->write RegFile from Memory
-*/
 output reg [3:0] ALUctr;
 output reg  [2:0] nPC_sel;
 output reg [1:0] ExtOp;
-/*  add 010 
-    sub 110
-    | 001
-*/
 
 wire add, sub, ori, lw, sw, beq;
 wire lui, addi, and_, andi, bne, j,
@@ -73,11 +53,11 @@ assign DMcut_sel[1] = lhu;
 // 控制ALU的具体运算功能
 always @(*) begin
 
-    if(add || lw || sw || addi ||lbu||lhu||ll||sb||sc||sh) // add
+    if(add || lw || sw || addi || lbu || lhu || ll || sb || sc || sh) // add
         ALUctr = 4'b0010;
     else if(nor_) // nor
         ALUctr = 4'b0011;
-    else if(ori||or_) // or
+    else if(ori || or_) // or
         ALUctr = 4'b0001;
     else if(sub || beq || bne) // sub
         ALUctr = 4'b0110;

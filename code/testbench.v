@@ -5,6 +5,7 @@ module testbench();
     reg Reset;
     reg [31:0] result;
     reg [7:0] tempi;
+    reg [31:0] CPU_out;
     mips mips1(.Clk(Clk),.Reset(Reset));
 
     initial begin
@@ -22,7 +23,7 @@ module testbench();
 
     always
         #1000000 Clk = ~ Clk;
-      
+    
     always @(posedge Clk)
     #1000000
     begin

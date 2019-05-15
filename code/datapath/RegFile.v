@@ -16,7 +16,7 @@ input [31:0] WData, PC;
 input RegWr, Clk, Reset; // RegWr 写-使能
 output [31:0] RD1, RD2;
 
-reg [31:0] regHeap[31:1];
+reg [31:0] regHeap[31:0];
 
 assign RD1 = (RS1 == 5'd0) ? 32'd0 : regHeap[RS1];
 assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS2];
