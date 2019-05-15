@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
 module seg7decimal(
-input [15:0] x,
+input [15:0] x,                //被显示的数，四位十六进制数                 
 input clk,
-input clr,
-output reg [6:0] a_to_g,
-output reg [3:0] an,
+input rst_n,                  //重置
+output reg [6:0] a_to_g,      //输出，即该位的数字
+output reg [3:0] an,          //输出，即选择哪位数字
 output wire dp 
 );
 
@@ -19,16 +19,13 @@ assign dp = 0;
 assign s = clkdiv[19:18];
 assign aen = 4'b1111; // all turned off initially
 
-// quad 4to1 MUX.
-
-
 always @(posedge clk)// or posedge clr)
 
 case(s)
-0:digit = x[3:0]; // s is 00 -->0 ;  digit gets assigned 4 bit value assigned to x[3:0]
-1:digit = x[7:4]; // s is 01 -->1 ;  digit gets assigned 4 bit value assigned to x[7:4]
-2:digit = x[11:8]; // s is 10 -->2 ;  digit gets assigned 4 bit value assigned to x[11:8
-3:digit = x[15:12]; // s is 11 -->3 ;  digit gets assigned 4 bit value assigned to x[15:12]
+0:digit = x[3:0]; // digit gets assigned 4 bit value assigned to x[3:0]
+1:digit = x[7:4]; //  digit gets assigned 4 bit value assigned to x[7:4]
+2:digit = x[11:8]; //  digit gets assigned 4 bit value assigned to x[11:8
+3:digit = x[15:12]; // digit gets assigned 4 bit value assigned to x[15:12]
 
 default:digit = x[3:0];
 
@@ -38,28 +35,25 @@ endcase
 always @(*)
 
 case(digit)
-
-
-//////////<---MSB-LSB<---
-//////////////gfedcba////////////////////////////////////////////           
-0:a_to_g = 7'b0111111;////0000                                                                      
-1:a_to_g = 7'b0000110;////0001                                               
-2:a_to_g = 7'b1011011;////0010                                                 
-//                                                                               
-3:a_to_g = 7'b1001111;////0011                                              
-4:a_to_g = 7'b1100110;////0100                                                
-5:a_to_g = 7'b1101101;////0101                                                
-6:a_to_g = 7'b1111101;////0110
-7:a_to_g = 7'b0000111;////0111
-8:a_to_g = 7'b1111111;////1000
-9:a_to_g = 7'b1101111;////1001
-'hA:a_to_g = 7'b1011111; // dash-(g)
-'hB:a_to_g = 7'b1111100; // all turned off
+//////////////gfedcba////////////////////////////////////////////   
+//对于该数，在一个“8”上显示出来，其中字母是小写    
+0:a_to_g = 7'b0111111;                                                                      
+1:a_to_g = 7'b0000110;                                               
+2:a_to_g = 7'b1011011;                                                                                                                           
+3:a_to_g = 7'b1001111;                                            
+4:a_to_g = 7'b1100110;                                                
+5:a_to_g = 7'b1101101;                                             
+6:a_to_g = 7'b1111101;
+7:a_to_g = 7'b0000111;
+8:a_to_g = 7'b1111111;
+9:a_to_g = 7'b1101111;
+'hA:a_to_g = 7'b1011111; 
+'hB:a_to_g = 7'b1111100;
 'hC:a_to_g = 7'b1011000;
-'hD:a_to_g = 7'b1011110; // dash-(g)
-'hE:a_to_g = 7'b1111001; // all turned off
+'hD:a_to_g = 7'b1011110; 
+'hE:a_to_g = 7'b1111001; 
 'hF:a_to_g = 7'b1110001;
-default: a_to_g = 7'b1111111; // U
+default: a_to_g = 7'b1111111;
 
 endcase
 
@@ -73,8 +67,8 @@ end
 
 //clkdiv
 
-always @(posedge clk or negedge clr) begin
-if ( !clr )
+always @(posedge clk or negedge rst_n) begin
+if ( !rst_n )
 clkdiv <= 0;
 else
 clkdiv <= clkdiv+1;
