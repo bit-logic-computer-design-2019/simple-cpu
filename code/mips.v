@@ -17,11 +17,14 @@ wire [31:0] ALU_input2;
 wire [31:0] NPC, PC;
 wire [3:0] ALUctr;
 wire [4:0] RD; 
+wire [31:0] CPU_out;
 
 wire [2:0] nPC_sel,MemWr;
 wire [1:0] ExtOp, MemtoReg,DMcut_sel;
 wire Br, Zero, carrier;
 wire RegWr, RegDst, ALUSrc;
+
+assign CPU_out = WData;
 
 //取指
 npc npc1(.Imm(instruction[15:0]),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.Reset(Reset),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));

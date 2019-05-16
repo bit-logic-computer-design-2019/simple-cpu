@@ -5,8 +5,32 @@ module testbench();
     reg Reset;
     reg [31:0] result;
     reg [7:0] tempi;
-    reg [31:0] CPU_out;
-    mips mips1(.Clk(Clk),.Reset(Reset));
+    wire [31:0] CPU_out;
+    wire [6:0] seg7_0_7bit,
+    wire  [6:0] seg7_1_7bit,
+    wire  [3:0] seg7_0_an,
+    wire [3:0] seg7_1_an,
+    wire  seg7_0_dp;
+    wire seg7_1_dp;
+
+    mips mips1(.Clk(Clk),.Reset(Reset),.CPU_out(CPU_out));
+    seg7decimal seg7_0(
+        .x          (CPU_out[31:16]),
+        .clk        (Clk),
+        .rst_n        (Reset),
+        .a_to_g     (seg7_0_7bit),
+        .an         (seg7_0_an),
+        .dp         (seg7_0_dp)
+        );
+    
+      seg7decimal seg7_1(
+        .x          (CPU_out[15:0]),
+        .clk        (Clk),
+        .rst_n        (Reset),
+        .a_to_g     (seg7_1_7bit),
+        .an         (seg7_1_an),
+        .dp         (seg7_1_dp)
+        ); 
 
     initial begin
         Reset = 1'b0;

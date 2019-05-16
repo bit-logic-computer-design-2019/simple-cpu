@@ -12,13 +12,14 @@ output reg  [2:0] nPC_sel;
 output reg [1:0] ExtOp;
 
 wire add, sub, ori, lw, sw, beq;
-wire lui, addi, and_, andi, bne, j,
+wire lui, addi, addiu, and_, andi, bne, j,
 jal, jr, lbu, lhu, ll, nor_, or_,
 slt, slti, sltiu, sltu, sll, srl, sb,
 sc, sh;
 
 assign add = (opcode == 6'h00)&&(funct == 6'h20 || funct == 6'h21);
-assign addi = (opcode == 6'h8||opcode == 6'h9);
+assign addi = (opcode == 6'h8);
+assign addiu = (opcode == 6'h9);
 assign sub = (opcode == 6'h00)&&(funct == 6'h22 || funct == 6'h23);
 assign ori = (opcode == 6'hd);
 assign lw = (opcode == 6'h23);
@@ -53,7 +54,7 @@ assign DMcut_sel[1] = lhu;
 // 控制ALU的具体运算功能
 always @(*) begin
 
-    if(add || lw || sw || addi || lbu || lhu || ll || sb || sc || sh) // add
+    if(add || lw || sw || addi || addiu || lbu || lhu || ll || sb || sc || sh) // add
         ALUctr = 4'b0010;
     else if(nor_) // nor
         ALUctr = 4'b0011;
@@ -78,20 +79,20 @@ always @(*) begin
 end
 
 // 是否使用第三个寄存器
-assign RegDst = nor_|| or_|| slt || sltu || sll|| srl|| add || sub || and_;     //加和减的时候需要存入第三个寄存器
+assign RegDst = nor_|| or_|| slt || sltu || sll|| srl|| add || sub || and_;
 
-// 是否向R中写入值
-assign RegWr = jal || lbu || lhu || ll || nor_ || or_ || slt || slti || sltiu || sltu || sll || srl || add || sub || ori || lw || lui || addi || and_ || andi || sc; //改变regFile的值
+// 是否向RegFile中写入值
+assign RegWr = jal || lbu || lhu || ll || nor_ || or_ || slt || slti || sltiu || sltu || sll || srl || add || sub || ori || lw || lui || addi || addiu || and_ || andi || sc;
 
 // 加载立即数
-assign ALUSrc = lbu|| lhu||ll||slti||sltiu||sb||sc||sh|| bne || ori || lw || sw || lui || addi || andi || beq;    //需要立即数
+assign ALUSrc = lbu || lhu || ll || slti || sltiu || sb || sc || sh || bne || ori || lw || sw || lui || addi || addiu || andi || beq;
 
-// 是否用有符号扩展
+// 16位立即数扩展
 always @(*) begin
-    if(andi)
+    if(andi || addiu || ori)
         // unsigned
         ExtOp = 2'b00;
-    else if(lw||sw||addi||lbu||lhu||ll||slti||sltiu||sb||sc||sh)
+    else if(lw || sw || addi || lbu || lhu || ll || slti || sltiu || sb || sc || sh)
         // signed
         ExtOp = 2'b01;
     else if(lui)
