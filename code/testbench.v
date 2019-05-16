@@ -6,10 +6,10 @@ module testbench();
     reg [31:0] result;
     reg [7:0] tempi;
     wire [31:0] CPU_out;
-    wire [6:0] seg7_0_7bit,
-    wire  [6:0] seg7_1_7bit,
-    wire  [3:0] seg7_0_an,
-    wire [3:0] seg7_1_an,
+    wire [6:0] seg7_0_7bit;
+    wire  [6:0] seg7_1_7bit;
+    wire  [3:0] seg7_0_an;
+    wire [3:0] seg7_1_an;
     wire  seg7_0_dp;
     wire seg7_1_dp;
 
@@ -39,7 +39,7 @@ module testbench();
         #30 Reset = 1'b1;
 //     result = mips1.im1.txt[0];
 
-        // result = mips1.im1.txt[1];    //指令写完了加一行这个@32(表示下一行是第50行....)
+        // result = mips1.im1.txt[1];    //指令写完了加�?行这个@32(表示下一行是�?50�?....)
         $monitor("Time %t, R16 = %h", $realtime, mips1.regfile1.regHeap[16]);
         $monitor("im1 = %h", mips1.im1.txt[0] );
         

@@ -10,7 +10,7 @@ wire [31:0] instruction;
 wire [31:0] imm32;
 wire [31:0] WData;  //被写进regfile的数据
 wire [31:0] ALU;    //ALU的输出
-wire [31:0] DM;     //memory的输输出
+wire [31:0] DM;     //memory的输出
 wire [31:0] BusA;
 wire [31:0] BusB;
 wire [31:0] ALU_input2;
@@ -27,7 +27,7 @@ wire RegWr, RegDst, ALUSrc;
 assign CPU_out = WData;
 
 //取指
-npc npc1(.Imm(instruction[15:0]),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.Reset(Reset),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
+npc npc1(.Imm(instruction[15:0]),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
 pc pc1(.NPC(NPC),.Clk(Clk),.Reset(Reset),.PC(PC));
 im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 
