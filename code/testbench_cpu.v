@@ -72,10 +72,10 @@ module testbench();
     // always
     //     #5 $display($time, " PC = %h NPC = %h", mips1.PC, mips1.NPC);
     always
-        #1000 Clk = ~ Clk;
+        #100 Clk = ~ Clk;
      always @(posedge Clk or posedge Reset)
     //  #200
-    #1000
+    #70
      begin
      $display("opcode = %h", mips1.instruction[31:26]);
      $display("funct = %h", mips1.instruction[5:0]);
@@ -98,6 +98,6 @@ module testbench();
     //  else begin
     //      $display("error.");
     //  end
-     Reset = 1'b0;
+    // Reset = 1'b0;
 end
 endmodule
