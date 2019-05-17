@@ -59,7 +59,6 @@ always @(posedge Clk or posedge Reset) begin
         // $monitor($time, " RegHeap[29] = %h", mips1.regfile1.regHeap[29]);
         // $monitor($time, " RegHeap[30] = %h", mips1.regfile1.regHeap[30]);
         // $monitor($time, " RegHeap[31] = %h", mips1.regfile1.regHeap[31]);
-        $monitoron;
         regHeap[RD] <= WData;
 end
 
