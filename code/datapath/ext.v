@@ -1,4 +1,4 @@
-//零拓展成32位
+//拓展成32位
 module ext(
     input [15:0] imm16, [1:0]ExtOp,
     output [31:0] imm32

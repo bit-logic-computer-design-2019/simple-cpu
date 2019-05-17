@@ -5,7 +5,32 @@ module testbench();
     reg Reset;
     reg [31:0] result;
     reg [7:0] tempi;
-    mips mips1(.Clk(Clk),.Reset(Reset));
+    wire [31:0] CPU_out;
+    wire [6:0] seg7_0_7bit;
+    wire  [6:0] seg7_1_7bit;
+    wire  [3:0] seg7_0_an;
+    wire [3:0] seg7_1_an;
+    wire  seg7_0_dp;
+    wire seg7_1_dp;
+
+    mips mips1(.Clk(Clk),.Reset(Reset),.CPU_out(CPU_out));
+    seg7decimal seg7_0(
+        .x          (CPU_out[31:16]),
+        .clk        (Clk),
+        .rst_n        (Reset),
+        .a_to_g     (seg7_0_7bit),
+        .an         (seg7_0_an),
+        .dp         (seg7_0_dp)
+        );
+    
+      seg7decimal seg7_1(
+        .x          (CPU_out[15:0]),
+        .clk        (Clk),
+        .rst_n        (Reset),
+        .a_to_g     (seg7_1_7bit),
+        .an         (seg7_1_an),
+        .dp         (seg7_1_dp)
+        ); 
 
     initial begin
         Reset = 1'b0;
@@ -14,7 +39,7 @@ module testbench();
         #30 Reset = 1'b1;
 //     result = mips1.im1.txt[0];
 
-        // result = mips1.im1.txt[1];    //指令写完了加一行这个@32(表示下一行是第50行....)
+        // result = mips1.im1.txt[1];    //指令写完了加�?行这个@32(表示下一行是�?50�?....)
         $monitor("Time %t, R16 = %h", $realtime, mips1.regfile1.regHeap[16]);
         $monitor("im1 = %h", mips1.im1.txt[0] );
         
@@ -22,7 +47,7 @@ module testbench();
 
     always
         #1000000 Clk = ~ Clk;
-      
+    
     always @(posedge Clk)
     #1000000
     begin

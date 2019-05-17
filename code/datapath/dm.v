@@ -11,12 +11,13 @@ reg [31:0] tmp;
 input [2:0]MemWr;
 output [31:0] DM; // alias ReadData
 
-reg [7:0] memory[63:0];
+reg [31:0] memory[63:0];
 
 // DMWr 控制读还是写
 always @(posedge Clk or posedge Reset) begin
     if(Reset)
-        $readmemb("E:/gitHub/simple-cpu/code/restfile/dm.txt", memory);
+        $readmemh("E:/github/simple-cpu/code/resetfile/dm.txt", memory);
+        //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
     else if(MemWr == 1)
     // 若写使能�?1，则写入memory[Addr]
         memory[Ad] <= WrData;

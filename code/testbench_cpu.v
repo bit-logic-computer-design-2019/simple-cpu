@@ -1,32 +1,19 @@
 `timescale 1ns/1ps
 
-module RegFile(
-    RS1, RS2, RD, WData, RegWr, Clk, Reset, PC,
-    RD1, RD2
-);
-// The 32-element x 32-bit register file has two read ports and one write
-// port. The read ports take 5-bit address inputs, A1 and A2, each specifying
-// one of 2 5 x 32 registers as source operands. They read the 32-bit register
-// values onto read data outputs RD1 and RD2, respectively. The write port
-// takes a 5-bit address input, A3; a 32-bit write data input, WD; a write
-// enable input, WE3; and a clock. If the write enable is 1, the register file
-// writes the data into the specified register on the rising edge of the clock.
-input [4:0] RS1, RS2, RD;
-input [31:0] WData, PC;
-input RegWr, Clk, Reset; // RegWr �?-使能
-output [31:0] RD1, RD2;
+module testbench();
+    reg Clk;
+    reg Reset;
+    reg [31:0] result;
+    reg [7:0] tempi;
 
-reg [31:0] regHeap[31:0];
+    mips mips1(.Clk(Clk),.Reset(Reset));
 
-assign RD1 = (RS1 == 5'd0) ? 32'd0 : regHeap[RS1];
-assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS2];
+    initial begin
+        Reset = 1'b0;
+        Clk = 1'b0;
+        Reset = 1'b1;
+        #5 Reset = 1'b0;
 
-// RegWr 为控制写的使�?
-always @(posedge Clk or posedge Reset) begin
-    if (Reset)
-        $readmemh("E:/github/simple-cpu/code/resetfile/regHeap.txt", regHeap); //系统任务从指定文件中读取数据到存储器
-        //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
-    else if (RegWr)
         // $monitor($time, " RegHeap[0] = %h", mips1.regfile1.regHeap[0]);
         // $monitor($time, " RegHeap[1] = %h", mips1.regfile1.regHeap[1]);      
         // $monitor($time, " RegHeap[2] = %h", mips1.regfile1.regHeap[2]);
@@ -59,7 +46,58 @@ always @(posedge Clk or posedge Reset) begin
         // $monitor($time, " RegHeap[29] = %h", mips1.regfile1.regHeap[29]);
         // $monitor($time, " RegHeap[30] = %h", mips1.regfile1.regHeap[30]);
         // $monitor($time, " RegHeap[31] = %h", mips1.regfile1.regHeap[31]);
-        regHeap[RD] <= WData;
-end
+        // $monitor($time, " im0 = %h", mips1.im1.txt[0]);
+        // $monitor($time, " im1 = %h", mips1.im1.txt[1]);
+        // $monitor($time, " opcode = %h", mips1.instruction[31:26]);
+        // $monitor($time, " funct = %h", mips1.instruction[5:0]);
+        // $monitor($time, " instruction = %h", mips1.instruction[31:0]);
+        // $monitor($time, " PC = %h", mips1.PC);
+        // $monitor($time, " NPC = %h", mips1.NPC);
+        // $monitor($time, " ALUctr = %b", mips1.ALUctr);
+        // $monitor($time, " A = %h, B = %h",mips1.alu1.A, mips1.alu1.B);
+        // $monitor($time, " ALU = %h", mips1.ALU);
+        // $monitor($time, " RegWr = %b", mips1.RegWr);
+        // $monitor($time, " RD = %b", mips1.RD);
+        // $monitor($time, " WData = %h", mips1.WData);
 
-endmodule // RegFile
+        // forever #5 Clk = ~ Clk;
+
+        //$monitor($time, " RegHeap[2] = %h",mips1.regfile1.regHeap[2]);
+        // result = mips1.im1.txt[0];
+        // result = mips1.im1.txt[1];    //指令写完了加�??????行这个@32(表示下一行是�??????50�??????....)
+        //$monitor("Time %t, R16 = %h", $realtime, mips1.regfile1.regHeap[16]);
+                
+    end 
+
+    // always
+    //     #5 $display($time, " PC = %h NPC = %h", mips1.PC, mips1.NPC);
+    always
+        #100 Clk = ~ Clk;
+     always @(posedge Clk or posedge Reset)
+    //  #200
+    #70
+     begin
+     $display("opcode = %h", mips1.instruction[31:26]);
+     $display("funct = %h", mips1.instruction[5:0]);
+     $display("instruction = %h", mips1.instruction[31:0]);
+     $display("PC = %h", mips1.PC);
+     $display("NPC = %h", mips1.NPC);
+     $display("ALUctr = % b", mips1.ALUctr);
+     $display("A = %h, B = %h",mips1.alu1.A, mips1.alu1.B);
+     $display("ALU = %h", mips1.ALU);
+     $display("RegWr = %b", mips1.RegWr);
+     $display("WData = %h", mips1.WData);
+     $display("RD = %d", mips1.RD);
+     for(tempi=0;tempi<32;tempi=tempi+1)
+         $display("R%d = %h",tempi,mips1.regfile1.regHeap[tempi]);
+    //$display("Reset = %d", Reset);
+
+    //  if ( mips1.im1.txt[0] == 32'h3c10ffff) begin
+    //      $display("success.");
+    //  end
+    //  else begin
+    //      $display("error.");
+    //  end
+    // Reset = 1'b0;
+end
+endmodule

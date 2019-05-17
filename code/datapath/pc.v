@@ -1,6 +1,6 @@
 // 指向指令存储
 module pc(
-    NPC,Clk,Reset,
+    NPC, Clk, Reset,
     PC
 );
 input [31:0] NPC;

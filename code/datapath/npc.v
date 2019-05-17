@@ -2,22 +2,18 @@
 // if(rs==rt)PC=PC+4+(sign)imm<<2 # beq
 
 module npc(
-    Imm, nPC_sel, Zero, Reset,PC, JumpAddr,BusA,
+    Imm, nPC_sel, Zero, PC, JumpAddr, BusA,
     NPC
 ); 
     input [15:0] Imm;
     input [2:0] nPC_sel;
     input Zero;
-    input Reset;
     input [31:0] PC, BusA;
     input [25:0] JumpAddr;
-    output reg [31:0] NPC; //注意这里从第二位开始
+    output reg [31:0] NPC; //注意这里从第二位�?�?
 
-  
 always @(*) begin
-    if (Reset == 1)
-        NPC = 1;
-    else if (nPC_sel == 3'b001 && Zero == 1)
+    if (nPC_sel == 3'b001 && Zero == 1)
         // 加等于立即数
         NPC = PC + 1 + Imm;
     else if (nPC_sel == 3'b010 && Zero == 0)
