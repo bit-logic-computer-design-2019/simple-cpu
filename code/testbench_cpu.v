@@ -12,6 +12,7 @@ module testbench();
         Reset = 1'b0;
         Clk = 1'b0;
         Reset = 1'b1;
+        #5 Reset = 1'b0;
 
         // $monitor($time, " RegHeap[0] = %h", mips1.regfile1.regHeap[0]);
         // $monitor($time, " RegHeap[1] = %h", mips1.regfile1.regHeap[1]);      
@@ -63,7 +64,7 @@ module testbench();
 
         //$monitor($time, " RegHeap[2] = %h",mips1.regfile1.regHeap[2]);
         // result = mips1.im1.txt[0];
-        // result = mips1.im1.txt[1];    //指令写完了加�?????行这个@32(表示下一行是�?????50�?????....)
+        // result = mips1.im1.txt[1];    //指令写完了加�??????行这个@32(表示下一行是�??????50�??????....)
         //$monitor("Time %t, R16 = %h", $realtime, mips1.regfile1.regHeap[16]);
                 
     end 
@@ -71,29 +72,32 @@ module testbench();
     // always
     //     #5 $display($time, " PC = %h NPC = %h", mips1.PC, mips1.NPC);
     always
-        #10 Clk = ~ Clk;
-     always @(posedge Clk)
-     #10
+        #100 Clk = ~ Clk;
+     always @(posedge Clk or posedge Reset)
+    //  #200
+    #70
      begin
      $display("opcode = %h", mips1.instruction[31:26]);
      $display("funct = %h", mips1.instruction[5:0]);
      $display("instruction = %h", mips1.instruction[31:0]);
      $display("PC = %h", mips1.PC);
      $display("NPC = %h", mips1.NPC);
-     $display("ALUctr = %b", mips1.ALUctr);
+     $display("ALUctr = % b", mips1.ALUctr);
      $display("A = %h, B = %h",mips1.alu1.A, mips1.alu1.B);
      $display("ALU = %h", mips1.ALU);
      $display("RegWr = %b", mips1.RegWr);
+     $display("WData = %h", mips1.WData);
+     $display("RD = %d", mips1.RD);
      for(tempi=0;tempi<32;tempi=tempi+1)
          $display("R%d = %h",tempi,mips1.regfile1.regHeap[tempi]);
-     $display("Reset = %d", Reset);
+    //$display("Reset = %d", Reset);
 
-     if ( mips1.im1.txt[0] == 32'h3c10ffff) begin
-         $display("success.");
-     end
-     else begin
-         $display("error.");
-     end
-     Reset = 1'b0;
+    //  if ( mips1.im1.txt[0] == 32'h3c10ffff) begin
+    //      $display("success.");
+    //  end
+    //  else begin
+    //      $display("error.");
+    //  end
+    // Reset = 1'b0;
 end
 endmodule
