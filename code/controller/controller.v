@@ -1,9 +1,10 @@
 module controller(
-    opcode, funct,
+    opcode, funct, instruction,
     nPC_sel, RegWr, RegDst, ExtOp, ALUSrc, ALUctr, MemWr, MemtoReg, DMcut_sel
 );
 
 input [5:0] opcode, funct;   //指令操作码
+input [31:0] instruction;   //整个指令
 output RegWr, RegDst, ALUSrc;
 output [1:0] MemtoReg, DMcut_sel;
 output [2:0] MemWr;
@@ -48,12 +49,13 @@ assign sc = (opcode == 6'h38);
 assign sh = (opcode == 6'h29);
 assign sw = (opcode == 6'h2b);
 assign stop = (opcode == 6'h3f) && (funct == 6'h3f);
+assign nop = (instruction == 32'd0);    //与stop相比只有nPC_sel不一样
 
 // 存储处理
 assign DMcut_sel[0] = lbu;
 assign DMcut_sel[1] = lhu;
 
-// 控制ALU的具体运算功能
+// 控制ALU的具体运算功能 
 always @(*) begin
 
     if(add || lw || sw || addi || addiu || lbu || lhu || ll || sb || sc || sh) // add
@@ -64,7 +66,7 @@ always @(*) begin
         ALUctr = 4'b0001;
     else if(sub || beq || bne) // sub
         ALUctr = 4'b0110;
-    else if(slt||slti || sltiu || sltu) // slt
+    else if(slt || slti || sltiu || sltu) // slt
         ALUctr = 4'b0100;
     else if(jr) // Send A
         ALUctr = 4'b0101;
@@ -76,7 +78,7 @@ always @(*) begin
         ALUctr = 4'b1000;
     else if(srl) // right shamt
         ALUctr = 4'b1001;
-    else if(stop)
+    else if(stop || nop)
         ALUctr = 4'b1010;
 
 
@@ -108,14 +110,14 @@ always @(*) begin
 end
 
 // 1：从DataMemroy加载数据，0：从ALU加载数据
-assign MemtoReg[0] = lw ||lbu||lhu||ll||sc || stop;   //lw从memory里加载数据
+assign MemtoReg[0] = lw || lbu || lhu || ll || sc || stop || nop;   //lw从memory里加载数据
 // 2: 从PC加载数据
-assign MemtoReg[1] = jal || stop;
+assign MemtoReg[1] = jal || stop || nop;
 
 // 是否写入DataMemory
-assign MemWr[0] = sw || sc || stop;  //sw的时候写memory
+assign MemWr[0] = sw || sc || stop || nop;  //sw的时候写memory
 assign MemWr[1] = sb || sc;
-assign MemWr[2] = sh || stop;
+assign MemWr[2] = sh || stop || nop;
 
 // nPC是否不再是简简单单的加1
 always @(*) begin

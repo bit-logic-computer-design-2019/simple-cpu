@@ -35,7 +35,7 @@ im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 ext ext1(.imm16(instruction[15:0]),.ExtOp(ExtOp),.imm32(imm32));
 
 //controller
-controller con1(.opcode(instruction[31:26]),.funct(instruction[5:0]),.nPC_sel(nPC_sel),.RegWr(RegWr),.RegDst(RegDst),.ExtOp(ExtOp),.ALUSrc(ALUSrc),.MemWr(MemWr),.MemtoReg(MemtoReg),.ALUctr(ALUctr),.DMcut_sel(DMcut_sel));
+controller con1(.instruction(instruction),.opcode(instruction[31:26]),.funct(instruction[5:0]),.nPC_sel(nPC_sel),.RegWr(RegWr),.RegDst(RegDst),.ExtOp(ExtOp),.ALUSrc(ALUSrc),.MemWr(MemWr),.MemtoReg(MemtoReg),.ALUctr(ALUctr),.DMcut_sel(DMcut_sel));
  
 //ALU
 alu alu1(.A(BusA),.B(ALU_input2),.ALUctr(ALUctr),.ALU(ALU),.Zero(Zero),.carrier(carrier),.shamt(instruction[10:6]));
@@ -48,7 +48,7 @@ Datamemory mem1(.Ad(ALU),.WrData(BusB),.MemWr(MemWr),.Clk(Clk),.Reset(Reset),.DM
 
 //MUX
 mux2_1_5 mux1(.input0(instruction[20:16]),.input1(instruction[15:11]),.Select(RegDst),.out(RD));
-mux4_1_32 mux2(.input0(ALU),.input1(DM),.input2(PC+2),.input3(32'h0),.Select(MemtoReg),.out(WData));
+mux4_1_32 mux2(.input0(ALU),.input1(DM),.input2(PC+2),.input3(32'd0),.Select(MemtoReg),.out(WData));
 mux2_1_32 mux3(.input0(BusB),.input1(imm32),.Select(ALUSrc),.out(ALU_input2));
 
 endmodule // mips  
