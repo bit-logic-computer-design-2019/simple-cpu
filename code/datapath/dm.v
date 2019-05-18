@@ -19,7 +19,7 @@ always @(posedge Clk or posedge Reset) begin
         $readmemh("E:/github/simple-cpu/code/resetfile/dm.txt", memory);
         //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
     else if(MemWr == 1)
-    // 若写使能为1，则写入memory[Addr]
+    // 若写使能�?1，则写入memory[Addr]
         memory[Ad] <= WrData;
     else if(MemWr == 2)
         memory[Ad][7:0] <= WrData[7:0];

@@ -47,7 +47,9 @@ assign sb = (opcode == 6'h28);
 assign sc = (opcode == 6'h38);
 assign sh = (opcode == 6'h29);
 assign sw = (opcode == 6'h2b);
+assign stop = (opcode == 6'h3f) && (funct == 6'h3f);
 
+// 存储处理
 assign DMcut_sel[0] = lbu;
 assign DMcut_sel[1] = lhu;
 
@@ -74,6 +76,8 @@ always @(*) begin
         ALUctr = 4'b1000;
     else if(srl) // right shamt
         ALUctr = 4'b1001;
+    else if(stop)
+        ALUctr = 4'b1010;
 
 
 end
@@ -104,14 +108,14 @@ always @(*) begin
 end
 
 // 1：从DataMemroy加载数据，0：从ALU加载数据
-assign MemtoReg[0] = lw ||lbu||lhu||ll||sc;   //lw从memory里加载数据
+assign MemtoReg[0] = lw ||lbu||lhu||ll||sc || stop;   //lw从memory里加载数据
 // 2: 从PC加载数据
-assign MemtoReg[1] = jal;
+assign MemtoReg[1] = jal || stop;
 
 // 是否写入DataMemory
-assign MemWr[0] = sw || sc;  //sw的时候写memory
+assign MemWr[0] = sw || sc || stop;  //sw的时候写memory
 assign MemWr[1] = sb || sc;
-assign MemWr[2] = sh;
+assign MemWr[2] = sh || stop;
 
 // nPC是否不再是简简单单的加1
 always @(*) begin
@@ -125,6 +129,8 @@ always @(*) begin
         nPC_sel = 3'b100;
     else if(jr)
         nPC_sel = 3'b101;
+    else if(stop)
+        nPC_sel = 3'b110;
     else
         nPC_sel = 3'b000;
 end
