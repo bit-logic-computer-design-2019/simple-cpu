@@ -24,6 +24,8 @@ always @(*) begin
         NPC = JumpAddr;
     else if (nPC_sel == 3'b101) // jr
         NPC = BusA;
+    else if (nPC_sel == 3'b110)
+        NPC = PC;
     else
         NPC = PC + 1;
 end

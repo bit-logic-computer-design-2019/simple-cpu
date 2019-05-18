@@ -82,12 +82,12 @@ module testbench();
      $display("instruction = %h", mips1.instruction[31:0]);
      $display("PC = %h", mips1.PC);
      $display("NPC = %h", mips1.NPC);
-     $display("ALUctr = % b", mips1.ALUctr);
+     $display("ALUctr = %b", mips1.ALUctr);
      $display("A = %h, B = %h",mips1.alu1.A, mips1.alu1.B);
      $display("ALU = %h", mips1.ALU);
      $display("RegWr = %b", mips1.RegWr);
      $display("WData = %h", mips1.WData);
-     $display("RD = %d", mips1.RD);
+     $display("RD = %b", mips1.RD);
      for(tempi=0;tempi<32;tempi=tempi+1)
          $display("R%d = %h",tempi,mips1.regfile1.regHeap[tempi]);
     //$display("Reset = %d", Reset);
