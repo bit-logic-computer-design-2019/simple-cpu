@@ -4,13 +4,14 @@ module Datamemory(
     DM
 );
 input Clk, Reset;
-input [15:0] Ad;    //寻址范围是0-65536(16'hffff) 高位截断(默认不会超出寻址范围了....)
+input [15:0] Ad;    //寻址范围�?0-65536(16'hffff) 高位截断(默认不会超出寻址范围�?....)
 input [31:0] WrData; 
 input [1:0] DMcut_sel;
 input [2:0]MemWr;
 output [31:0] DM; // alias ReadData
 
-reg [7:0] memory[16'hFFFF:0];
+reg [7:0] memory[16'hffff:16'hff00];
+//reg [7:0] memory[8'hff:8'h00];
 wire [31:0] tmp;
 
 // DMWr 控制读还是写
@@ -19,7 +20,7 @@ always @(posedge Clk or posedge Reset) begin
         $readmemb("E:/github/simple-cpu/code/resetfile/dm.txt", memory);
         //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
     else if(MemWr == 1)
-    // 若写使能�?1，则写入memory[Addr]
+    // 若写使能�??1，则写入memory[Addr]
         {memory[Ad], memory[Ad + 1'b1], memory[Ad + 2'b10], memory[Ad + 2'b11]} <= WrData;
     else if(MemWr == 2)
         memory[Ad] <= WrData[7:0];

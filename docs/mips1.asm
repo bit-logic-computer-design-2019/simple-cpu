@@ -31,7 +31,7 @@ $L2:
         nop
         addu    $2,$3,$2
         sw      $2,12($fp)
-        lw      $2,12($fp)
+        lw      $2,20($fp)
         nop
         sw      $2,8($fp)
         b       $L4

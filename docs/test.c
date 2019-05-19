@@ -10,7 +10,7 @@ int main(){
 
         int t = b;
         b = a+b;
-        a = b;
+        a = t;
         // mv to print
     }
 }

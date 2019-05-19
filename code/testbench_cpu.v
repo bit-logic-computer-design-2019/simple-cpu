@@ -3,7 +3,6 @@
 module testbench();
     reg Clk;
     reg Reset;
-    reg [31:0] result;
     reg [7:0] tempi;
 
     mips mips1(.Clk(Clk),.Reset(Reset));
@@ -12,6 +11,7 @@ module testbench();
         Reset = 1'b0;
         Clk = 1'b0;
         Reset = 1'b1;
+        #3 Reset = 1'b0;
 
         // $monitor($time, " RegHeap[0] = %h", mips1.regfile1.regHeap[0]);
         // $monitor($time, " RegHeap[1] = %h", mips1.regfile1.regHeap[1]);      
@@ -76,31 +76,32 @@ module testbench();
     //  #200
     #4
     begin
-    $display("opcode = %h", mips1.instruction[31:26]);
-    $display("funct = %h", mips1.instruction[5:0]);
-    $display("instruction = %h", mips1.instruction[31:0]);
-    $display("PC = %d", mips1.PC);
-    $display("NPC = %d", mips1.NPC);
-    $display("ALUctr = %b", mips1.ALUctr);
-    $display("A = %h, B = %h",mips1.alu1.A, mips1.alu1.B);
-    $display("ALU = %h", mips1.ALU);
-    $display("RegWr = %b", mips1.RegWr);
-    $display("DM = %h", mips1.DM[31:0]);
-    $display("Imm32 = %h", mips1.imm32[31:0]);
-    $display("Zero = %b", mips.Zero);
-    $display("ExtOp = %b", mips.ExtOp[1:0]);
-    $display("MemWr = %b", mips1.MemWr[2:0]);
-    $display("nPC_sel = %b", mips1.nPC_sel[2:0]);
-    $display("MemtoReg = %b", mips1.MemtoReg[1:0]);
-    $display("WData = %h", mips1.WData);
-    $display("RD = %b", mips1.RD);
-    for(tempi = 0 ; tempi < 32 ; tempi = tempi + 1)
-        $display("R%d = %h", tempi, mips1.regfile1.regHeap[tempi]);
-    $display("M:a = %d", {mips1.mem1.memory[16'hffe8], mips1.mem1.memory[16'hffe9], mips1.mem1.memory[16'hffea], mips1.mem1.memory[16'hffeb]});
-    $display("M:b = %d", {mips1.mem1.memory[16'hffec], mips1.mem1.memory[16'hffed], mips1.mem1.memory[16'hffee], mips1.mem1.memory[16'hffef]});
-    $display("M:count = %d", {mips1.mem1.memory[16'hfff0], mips1.mem1.memory[16'hfff1], mips1.mem1.memory[16'hfff2], mips1.mem1.memory[16'hfff3]});
-    $display("M:t = %d", {mips1.mem1.memory[16'hfff4], mips1.mem1.memory[16'hfff5], mips1.mem1.memory[16'hfff6], mips1.mem1.memory[16'hfff7]});
-    $display($time,"\n");
+    // $display("opcode = %h", mips1.instruction[31:26]);
+    // $display("funct = %h", mips1.instruction[5:0]);
+    // $display("instruction = %h", mips1.instruction[31:0]);
+    // $display("PC = %d", mips1.PC);
+    // $display("NPC = %d", mips1.NPC);
+    // $display("ALUctr = %b", mips1.ALUctr);
+    // $display("A = %h, B = %h",mips1.alu1.A, mips1.alu1.B);
+    // $display("ALU = %h", mips1.ALU);
+    // $display("RegWr = %b", mips1.RegWr);
+    // $display("DM = %h", mips1.DM[31:0]);
+    // $display("Imm32 = %h", mips1.imm32[31:0]);
+    // $display("Zero = %b", mips.Zero);
+    // $display("ExtOp = %b", mips.ExtOp[1:0]);
+    // $display("MemWr = %b", mips1.MemWr[2:0]);
+    // $display("nPC_sel = %b", mips1.nPC_sel[2:0]);
+    // $display("MemtoReg = %b", mips1.MemtoReg[1:0]);
+    // $display("WData = %h", mips1.WData);
+    // $display("RD = %b", mips1.RD);
+    // for(tempi = 0 ; tempi < 32 ; tempi = tempi + 1)
+    //     $display("R%d = %h", tempi, mips1.regfile1.regHeap[tempi]);
+    // $display("M:a = %d", {mips1.mem1.memory[16'hffe8], mips1.mem1.memory[16'hffe9], mips1.mem1.memory[16'hffea], mips1.mem1.memory[16'hffeb]});
+    $monitor("M:b = %d", {mips1.mem1.memory[16'hffec], mips1.mem1.memory[16'hffed], mips1.mem1.memory[16'hffee], mips1.mem1.memory[16'hffef]});
+    $monitoron;
+    //$display("M:count = %d", {mips1.mem1.memory[16'hfff0], mips1.mem1.memory[16'hfff1], mips1.mem1.memory[16'hfff2], mips1.mem1.memory[16'hfff3]});
+    //$display("M:t = %d", {mips1.mem1.memory[16'hfff4], mips1.mem1.memory[16'hfff5], mips1.mem1.memory[16'hfff6], mips1.mem1.memory[16'hfff7]});
+    //$display($time,"\n");
     // for(tempj = 16'hffff ; tempj > 16'hffe0 ; tempj = tempj - 1)
     //     $display("M%d = %h", tempj, mips1.mem1.memory[tempj]);
     // $display("\n");
