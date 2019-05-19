@@ -32,6 +32,7 @@ always @(posedge Clk or posedge Reset) begin
         {memory[Ad + 2'b10], memory[Ad + 2'b11]} <= WrData[15:0];
 
 end
+
 assign tmp = (MemWr == 3) ? 32'd1 : {memory[Ad], memory[Ad + 1'b1], memory[Ad + 2'b10], memory[Ad + 2'b11]};
 assign DM = (DMcut_sel == 0)? tmp:
             (DMcut_sel == 1)? {24'd0,tmp[7:0]}:

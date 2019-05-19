@@ -11,8 +11,9 @@ module top(
    output    wire seg7_1_dp
     );
     
-    reg [31:0] testv;
+    wire [31:0] testv;
 
+    mips mips1(.Clk(Clk),.Reset(rst_n),.CPU_out(testv));
 
 //分频
 /*    always @(posedge clk ) 
@@ -45,13 +46,13 @@ always @(posedge clk )
 	end
 end  */
 
-    always @(posedge clk )
-        begin 
-            if(!rst_n )
-                testv = 32'h1234abcd;
-              else
-                testv = testv + 1;
-        end  
+    // always @(posedge clk )
+    //     begin 
+    //         if(!rst_n )
+    //             testv = 32'h1234abcd;
+    //           else
+    //             testv = testv + 1;
+    //     end  
     
     seg7decimal seg7_0(
         .x          (testv[31:16]),

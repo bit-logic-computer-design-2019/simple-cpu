@@ -24,7 +24,7 @@ wire [1:0] ExtOp, MemtoReg,DMcut_sel;
 wire Br, Zero, carrier;
 wire RegWr, RegDst, ALUSrc;
 
-assign CPU_out = WData;
+assign CPU_out = {mem1.memory[16'hffec], mem1.memory[16'hffed], mem1.memory[16'hffee], mem1.memory[16'hffef]};
 
 //取指
 npc npc1(.Imm(imm32),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
