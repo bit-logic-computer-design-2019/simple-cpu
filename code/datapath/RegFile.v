@@ -20,7 +20,7 @@ reg [31:0] regHeap[31:0];
 
 assign RD1 = (RS1 == 5'd0) ? 32'd0 : regHeap[RS1];
 assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS2];
-
+ 
 // RegWr 为控制写的使�?
 always @(posedge Clk or posedge Reset) begin
     if (Reset)

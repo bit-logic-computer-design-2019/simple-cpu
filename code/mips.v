@@ -27,7 +27,7 @@ wire RegWr, RegDst, ALUSrc;
 assign CPU_out = WData;
 
 //取指
-npc npc1(.Imm(instruction[15:0]),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
+npc npc1(.Imm(imm32),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
 pc pc1(.NPC(NPC),.Clk(Clk),.Reset(Reset),.PC(PC));
 im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 
@@ -44,7 +44,7 @@ alu alu1(.A(BusA),.B(ALU_input2),.ALUctr(ALUctr),.ALU(ALU),.Zero(Zero),.carrier(
 RegFile regfile1(.RS1(instruction[25:21]),.RS2(instruction[20:16]),.RD(RD),.WData(WData),.RegWr(RegWr),.Clk(Clk),.Reset(Reset),.RD1(BusA),.RD2(BusB),.PC(PC));
 
 //data_memory
-Datamemory mem1(.Ad(ALU),.WrData(BusB),.MemWr(MemWr),.Clk(Clk),.Reset(Reset),.DM(DM),.DMcut_sel(DMcut_sel));
+Datamemory mem1(.Ad(ALU[15:0]),.WrData(BusB),.MemWr(MemWr),.Clk(Clk),.Reset(Reset),.DM(DM),.DMcut_sel(DMcut_sel));
 
 //MUX
 mux2_1_5 mux1(.input0(instruction[20:16]),.input1(instruction[15:11]),.Select(RegDst),.out(RD));

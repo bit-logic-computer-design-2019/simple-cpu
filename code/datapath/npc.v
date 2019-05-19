@@ -5,7 +5,7 @@ module npc(
     Imm, nPC_sel, Zero, PC, JumpAddr, BusA,
     NPC
 ); 
-    input [15:0] Imm;
+    input [31:0] Imm;
     input [2:0] nPC_sel;
     input Zero;
     input [31:0] PC, BusA;

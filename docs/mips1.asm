@@ -12,7 +12,7 @@ $L4:
 $L3:
         lw      $2,16($fp)
         nop
-        addiu   $3,$2,-1
+        addi   $3,$2,-1
         sw      $3,16($fp)
         sltu    $2,$0,$2
         andi    $2,$2,0x00ff

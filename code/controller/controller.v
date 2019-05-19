@@ -91,20 +91,20 @@ assign RegDst = nor_|| or_|| slt || sltu || sll|| srl|| add || sub || and_;
 assign RegWr = jal || lbu || lhu || ll || nor_ || or_ || slt || slti || sltiu || sltu || sll || srl || add || sub || ori || lw || lui || addi || addiu || and_ || andi || sc;
 
 // 加载立即数
-assign ALUSrc = lbu || lhu || ll || slti || sltiu || sb || sc || sh || bne || ori || lw || sw || lui || addi || addiu || andi || beq;
+assign ALUSrc = lbu || lhu || ll || slti || sltiu || sb || sc || sh || bne || ori || lw || sw || lui || addi || addiu || andi;
 
 // 16位立即数扩展
 always @(*) begin
     if(andi || addiu || ori)
         // unsigned
         ExtOp = 2'b00;
-    else if(lw || sw || addi || lbu || lhu || ll || slti || sltiu || sb || sc || sh)
+    else if(lw || sw || addi || lbu || lhu || ll || slti || sltiu || sb || sc || sh || beq)
         // signed
         ExtOp = 2'b01;
     else if(lui)
         // lui
         ExtOp = 2'b10;
-    else if(beq || bne)
+    else if(bne)
         ExtOp = 2'b11;
 
 end
