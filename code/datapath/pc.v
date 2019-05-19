@@ -24,8 +24,8 @@ output reg [31:0] PC;
 // 0x00000000 and place our
 // programs there instead. 
 
-always @(posedge Clk or posedge Reset) begin
-    if (Reset) // 暂时初始化为0
+always @(posedge Clk or negedge Reset) begin
+    if (!Reset) // 暂时初始化为0
         PC <= 32'h0;
     else
         PC <= NPC;

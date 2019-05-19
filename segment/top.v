@@ -12,8 +12,25 @@ module top(
     );
     
     wire [31:0] testv;
+    reg  [31:0] count;
 
-    mips mips1(.Clk(Clk),.Reset(rst_n),.CPU_out(testv));
+    reg m_clk;
+
+    always@(posedge clk or negedge rst_n) begin
+      if(!rst_n) begin
+        count = 32'd0;
+        m_clk = 1'b0;
+      end
+      else begin
+        count = count + 1'b1;
+        if(count == 4'd10) begin
+          count = 32'd0;
+          m_clk = ~m_clk;
+        end
+      end
+    end
+
+    mips mips1(.Clk(m_clk),.Reset(rst_n),.CPU_out(testv));
 
 //分频
 /*    always @(posedge clk ) 

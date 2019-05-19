@@ -15,8 +15,8 @@ reg [7:0] memory[16'hffff:16'hff00];
 wire [31:0] tmp;
 
 // DMWr 控制读还是写
-always @(posedge Clk or posedge Reset) begin
-    if(Reset)
+always @(posedge Clk or negedge Reset) begin
+    if(!Reset)
         $readmemb("E:/github/simple-cpu/code/resetfile/dm.txt", memory);
         //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
     else if(MemWr == 1)
