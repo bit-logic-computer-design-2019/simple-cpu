@@ -10,7 +10,7 @@ module testbench();
     wire [3:0] seg7_1_an;
     wire  seg7_0_dp;
     wire seg7_1_dp;
-
+    wire [31:0] x,y,z;
     top top1(
         .clk(Clk),
         .rst_n(Reset),
@@ -21,7 +21,9 @@ module testbench();
         .seg7_0_dp(seg7_0_dp),
         .seg7_1_dp(seg7_1_dp)
     );
-
+    assign y = top1.mips1.NPC;
+    assign x = top1.testv;
+    assign z = top1.mips1.instruction;
     initial begin
         Reset = 1'b1;
         Clk = 1'b0;

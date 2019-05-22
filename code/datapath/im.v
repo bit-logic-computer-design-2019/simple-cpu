@@ -15,8 +15,8 @@ reg [31:0] txt[63:0]; // 机器指令放在这里
 always @(posedge Clk or negedge Reset) begin
     if (!Reset)
         //$readmemh("E:/github/simple-cpu/code/resetfile/code.txt", txt);
-        $readmemb("E:/github/simple-cpu/docs/dump.txt", txt);
-        //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/code.txt", memory);  //读取指令
+        // $readmemb("E:/github/simple-cpu/docs/dump.txt", txt);
+        $readmemb("/home/fky/code/git/mine/simple-cpu/docs/dump.txt", txt);  //读取指令
 end
 
 assign IM = txt[PC];

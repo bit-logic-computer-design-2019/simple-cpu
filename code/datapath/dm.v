@@ -17,8 +17,8 @@ wire [31:0] tmp;
 // DMWr 控制读还是写
 always @(posedge Clk or negedge Reset) begin
     if(!Reset)
-        $readmemb("E:/github/simple-cpu/code/resetfile/dm.txt", memory);
-        //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
+        // $readmemb("E:/github/simple-cpu/code/resetfile/dm.txt", memory);
+        $readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
     else if(MemWr == 1)
     // 若写使能�??1，则写入memory[Addr]
         {memory[Ad], memory[Ad + 1'b1], memory[Ad + 2'b10], memory[Ad + 2'b11]} <= WrData;

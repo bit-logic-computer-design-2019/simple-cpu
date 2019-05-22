@@ -9,6 +9,8 @@ module top(
    output    wire [3:0] seg7_1_an,
    output   wire  seg7_0_dp,
    output    wire seg7_1_dp
+//   output  wire[31:0] testv
+//   output  count;
     );
     
     wire [31:0] testv;

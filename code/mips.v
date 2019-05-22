@@ -8,9 +8,9 @@ output CPU_out;
 
 wire [31:0] instruction;
 wire [31:0] imm32;
-wire [31:0] WData;  //被写进regfile的数�?
-wire [31:0] ALU;    //ALU的输�?
-wire [31:0] DM;     //memory的输�?
+wire [31:0] WData;  //被写进regfile的数�?
+wire [31:0] ALU;    //ALU的输�?
+wire [31:0] DM;     //memory的输�?
 wire [31:0] BusA;
 wire [31:0] BusB; 
 wire [31:0] ALU_input2;
@@ -25,13 +25,13 @@ wire Br, Zero, carrier;
 wire RegWr, RegDst, ALUSrc;
 
 assign CPU_out = {mem1.memory[16'hffec], mem1.memory[16'hffed], mem1.memory[16'hffee], mem1.memory[16'hffef]};
-//assign CPU_out = NPC;
+// assign CPU_out = NPC;
 //取指
 npc npc1(.Imm(imm32),.nPC_sel(nPC_sel),.Zero(Zero),.NPC(NPC),.PC(PC),.JumpAddr(instruction[25:0]),.BusA(BusA));
 pc pc1(.NPC(NPC),.Clk(Clk),.Reset(Reset),.PC(PC));
 im im1(.PC(PC),.Reset(Reset),.Clk(Clk),.IM(instruction));
 
-//拓展立即�?
+//拓展立即�?
 ext ext1(.imm16(instruction[15:0]),.ExtOp(ExtOp),.imm32(imm32));
 
 //controller

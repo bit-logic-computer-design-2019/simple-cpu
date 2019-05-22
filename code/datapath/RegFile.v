@@ -24,8 +24,8 @@ assign RD2 = (RS2 == 5'd0) ? 32'd0 : regHeap[RS2];
 // RegWr 为控制写的使�?
 always @(posedge Clk or negedge Reset) begin
     if (!Reset)
-        $readmemh("E:/github/simple-cpu/code/resetfile/regHeap.txt", regHeap); //系统任务从指定文件中读取数据到存储器
-        //$readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/dm.txt", memory);
+        // $readmemh("E:/github/simple-cpu/code/resetfile/regHeap.txt", regHeap); //系统任务从指定文件中读取数据到存储器
+        $readmemb("/home/fky/code/git/mine/simple-cpu/code/resetfile/regHeap.txt", regHeap);
     else if (RegWr)
         // $monitor($time, " RegHeap[0] = %h", mips1.regfile1.regHeap[0]);
         // $monitor($time, " RegHeap[1] = %h", mips1.regfile1.regHeap[1]);      
