@@ -24,7 +24,7 @@
 \begin{center}
 \begin{large}
 \begin{tabular}{c c |c c}
-小组编号& 44 & 指导老师 & 王娟\\
+小组编号& 15 & 指导老师 & 王娟\\
 \cline{2-2} \cline{4-4}
 \hline
 学\qquad 号& 1120173323 & 电\qquad 话& 592175501@qq.com \\
@@ -248,26 +248,39 @@ nPC接收Zero信号并加offset（有符号扩展）从而产生下一条指令�
     \label{FIG8}
 \end{figure}
 
-下文中介绍具体内容
+下文中介绍具体内容。
 
 \section{实验结果}
 
-书写高级语言代码（本实验中为驱动数码管的斐波那契数列程序），并编译为mips平台下指令集，并针对机器码进行适当修改
+书写高级语言代码（本实验中为驱动数码管的斐波那契数列程序），并编译为mips平台下指令集，并针对机器码进行适当修改。如图\ref{FIG6}。
 \begin{figure}[H]
     \centering
     \subfigure[C语言]{
         \includegraphics[width=0.3\textwidth]{5.png}
+        \label{FIG6a}
     }
     \subfigure[汇编]{
         \includegraphics[width=0.3\textwidth]{6.png}
+        \label{FIG6b}
     }
     \subfigure[机器码]{
         \includegraphics[width=0.3\textwidth]{7.png}
+        \label{FIG6c}
     }
     \caption{从C语言到MIPS架构下机器码}
     \label{FIG6}
 \end{figure}
-烧录并运行斐波那契数列程序，将结果展示在数码管上
+
+首先我们通过C语言编写斐波那契数列的程序,如图\ref{FIG6a}，注意此时不能使用任何标准库（因为该标准库是在x86平台下编译的，无法在MIPS平台下链接、执行），
+
+然后我们通过MIPS平台下的gcc工具链进行交叉编译。在这里为了方便，我们使用\href{https://godbolt.org/}{godbolt}这个网站进行编译：在左侧输入C语言代码，选择适当的编译工具后，右侧就会生成相应平台下的汇编，如图\ref{FIG6b}。
+
+之后，我们使用mars这个MIPS汇编模拟工具，讲汇编代码转换成机器码并保存其文本，如图\ref{FIG6c}。
+
+最后烧录并运行斐波那契数列程序，将结果展示在数码管上，
+可以看到，数码管按照十六进制，按照停顿依次显示斐波那契数列。（见视频）
+
+这证明我们可以利用编写的MIPS下单周期CPU正确运行程序，并且可以驱动硬件设备。
 
 
 \section{实验过程中问题的处理、讨论和改进思路，收获和体会}
